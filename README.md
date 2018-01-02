@@ -13,4 +13,14 @@ MongoDB提供了一组比较操作符：$lt/$lte/$gt/$gte/$ne，依次等价于<
 - `db.test.find({"name": {"$not": {"$in":["stephen2","stephen1"]}}})` $not表示取反，等同于SQL中的not。
 
 ### null数据查询
-- db.test.find({"x":null})
+- `db.test.find({"x":null})`  `db.students.find({"age":null})`
+- ` db.test.find({"x": {"$in": [null], "$exists":true}})`//需要将null作为数组中的一个元素进行相等性判断，即便这个数组中只有一个元素。
+    --再有就是通过$exists判断指定键是否存在。
+
+### 正则
+- db.students.find() //查询所有
+- db.students.find({"name":/Scott/i}) //忽略大小写
+
+### 数组查询
+- 
+
