@@ -22,5 +22,16 @@ MongoDB提供了一组比较操作符：$lt/$lte/$gt/$gte/$ne，依次等价于<
 - db.students.find({"name":/Scott/i}) //忽略大小写
 
 ### 数组查询
-- 
+-  db.getCollection('students').find() 
+-  db.getCollection('students').find({'like':'apple'}) //数组中所有包含banana的文档都会被检索出来
+检索数组中需要包含多个元素的情况，这里使用$all。下面的示例中，数组中必须同时包含apple和banana，但是他们的顺序无关紧要。
+-  `db.test.find({"fruit": {"$all": ["banana","apple"]}})` `db.getCollection('students').find({'like':{"$all":['apple','banana']}})`
+下面的示例表示精确匹配，即被检索出来的文档，fruit值中的数组数据必须和查询条件完全匹配，即不能多，也不能少，顺序也必须保持一致。
+- db.test.find({"fruit":["apple","banana","peach"]})
+面的示例将匹配数组中指定下标元素的值。数组的起始下标是0。
+- db.test.find({"fruit.2":"peach"})
+可以通过$size获取数组的长度，但是$size不能和比较操作符联合使用
+- db.test.find({"fruit": {$size : 3}})
+如果需要检索size > n的结果，不能直接使用$size，只能是添加一个额外的键表示数据中的元素数据，在操作数据中的元素时，需要同时更新size键的值。
 
+### [reference](http://blog.csdn.net/cw2004100021124/article/details/50150425)
